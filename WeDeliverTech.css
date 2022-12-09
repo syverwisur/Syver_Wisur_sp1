@@ -1,0 +1,128 @@
+table {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    border: 1px solid #212529;
+    border-radius: 6px;
+    border-collapse: separate !important;
+    border-spacing: 0;
+}
+
+th {
+    border: 1px solid #212529;
+    background-color: #0E8EA8;
+    font-family: "Consolas";
+    color: #fff;
+}
+
+td {
+    border: 1px solid #212529;
+    background-color: #83D1E1;
+    font-family: "Calibri";
+    color: #212529;
+    height: 27px
+}
+
+th:first-child{
+    border-radius: 5px 0px 0px 0px;
+}
+th:last-child{
+    border-radius: 0px 5px 0px 0px;
+}
+tr:last-child td:last-child {
+    border-radius: 0px 0px 5px 0px;
+}
+tr:last-child td:first-child {
+    border-radius: 0px 0px 0px 5px;
+}
+tr:only-child th:last-child{
+    border-radius: 0px 5px 5px 0px;
+}
+tr:only-child th:first-child{
+    border-radius: 5px 0px 0px 5px;
+}
+
+p, h2, h3 {
+    font-family: "calibri";
+    color: #212529;
+}
+
+#space{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button{
+    margin: 5px;
+    width: 100px;
+}
+
+#positive{
+    font-family: "consolas";
+    background-color: #198754;
+    color: #fff;
+    border-radius: 5px;
+}
+
+#positive:hover {background-color: #66FF00}
+
+#negative{
+    font-family: "consolas";
+    background-color: #dc3545;
+    color: #fff;
+    border-radius: 5px;
+}
+
+#negative:hover {background-color: red;}
+
+#right{
+    display: flex;
+    justify-content: flex-end;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#clock{
+    font-family: "calibri";
+    font-size: 24px;
+    color: #212529;
+    text-align: right;
+    width: 90%
+}
+
+ul,li{
+    font-family: "Consolas";
+}
+
+#navbar{
+    background-color:#0E8EA8;
+}
+
+#menuItem{
+    background-color: #0E8EA8;
+    width: 160px;
+    margin-left: 30px;
+}
+
+#menutext{
+    color: #fff;
+    text-decoration: none;
+}
+
+#dropItem{
+    background-color: #83D1E1;
+}
+
+#droptext{
+    color: #212529;
+    text-decoration: none;
+}
+
+#droptext:hover{
+    background-color: #0E8EA8;
+}

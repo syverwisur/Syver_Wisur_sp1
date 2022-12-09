@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>WeDeliverTech</title>      
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS -->
+        <link href="./css/bootstrap.min.css" rel="stylesheet">
+        <link href="WeDeliverTech.css" rel="stylesheet">
+        <script src="wdt_app.js"></script>
+        <script src="./js/js/bootstrap.bundle.min.js"></script>
+        <script src="jquery-3.6.0.js"></script>  
+    </head>
+    <body onload="clock();staffUserGet()"> 
+        <ul class="nav" id="navbar">
+            <li class="nav-item" id="menuItem">
+                <a id="menutext" class="active" aria-current="page" href="SP1.html">Dashboard</a>
+            </li>
+            <li class="nav-item dropdown" id="menuItem">
+                <a id="menutext" data-toggle="dropdown" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Inventory</a>
+                <ul id="dropItem" class="dropdown-menu">
+                    <li><a id="droptext" class="dropdown-item" href="#">Search</a></li>
+                    <li><a id="droptext" class="dropdown-item" href="#">Add</a></li>
+                    <li><a id="droptext" class="dropdown-item" href="#">Remove</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown" id="menuItem">
+                <a id="menutext" data-toggle="dropdown" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Orders</a>
+                <ul id="dropItem" class="dropdown-menu">
+                    <li><a id="droptext" class="dropdown-item" href="#">Search</a></li>
+                    <li><a id="droptext" class="dropdown-item" href="#">Add</a></li>
+                    <li><a id="droptext" class="dropdown-item" href="#">Remove</a></li>
+                </ul>
+            </li>
+        </ul>
+        <img class="position-absolute" height="70px" src="./WeDeliverTech_logo.png" alt="WeDeliverTech Logo">
+        <h2 class="text-center pt-2">Reception Management Dashboard</h2>
+        <h3 class="text-center">Staff</h3>
+        <table id="staffTable">
+            <tr>
+                <th>Picture</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Email Address</th>
+                <th>Status</th>
+                <th>Out time</th>
+                <th>Duration</th>
+                <th>Expected return time</th>
+            </tr>
+            <tr>
+                <td id="picture0"> </td>
+                <td id="name0"> </td>
+                <td id="surname0"> </td>
+                <td id="emailaddress0"> </td>
+                <td id="status0"> </td>
+                <td id="outtime0"> </td>
+                <td id="duration0"> </td>
+                <td id="expectedreturntime0"> </td>
+            </tr>
+            <tr>
+                <td id="picture1"> </td>
+                <td id="name1"> </td>
+                <td id="surname1"> </td>
+                <td id="emailaddress1"> </td>
+                <td id="status1"> </td>
+                <td id="outtime1"> </td>
+                <td id="duration1"> </td>
+                <td id="expectedreturntime1"> </td>
+            </tr>
+            <tr>
+                <td id="picture2"> </td>
+                <td id="name2"> </td>
+                <td id="surname2"> </td>
+                <td id="emailaddress2"> </td>
+                <td id="status2"> </td>
+                <td id="outtime2"> </td>
+                <td id="duration2"> </td>
+                <td id="expectedreturntime2"> </td>
+            </tr>
+            <tr>
+                <td id="picture3"> </td>
+                <td id="name3"> </td>
+                <td id="surname3"> </td>
+                <td id="emailaddress3"> </td>
+                <td id="status3"> </td>
+                <td id="outtime3"> </td>
+                <td id="duration3"> </td>
+                <td id="expectedreturntime3"> </td>
+            </tr>
+            <tr>
+                <td id="picture4"> </td>
+                <td id="name4"> </td>
+                <td id="surname4"> </td>
+                <td id="emailaddress4"> </td>
+                <td id="status4"> </td>
+                <td id="outtime4"> </td>
+                <td id="duration4"> </td>
+                <td id="expectedreturntime4"> </td>
+            </tr>
+        </table>
+        <div id="space">
+            <button id="negative" onclick="staffOut()">Out</button>
+            <button id="positive" onclick="staffIn()">In</button>
+        </div>
+        <h3 class="text-center">Schedule Delivery</h3>
+        <table>
+            <tr>
+                <th>Vehicle:</th>
+                <th>Name:</th>
+                <th>Surname:</th>
+                <th>Telephone:</th>
+                <th>Address:</th>
+                <th>Return time:</th>
+            </tr>
+            <tr>
+                <td>_______________</td>
+                <td>_______________</td>
+                <td>_______________</td>
+                <td>____-_____-_____</td>
+                <td>_______________</td>
+                <td>____:____</td>
+            </tr>
+        </table>
+        <div id="right">
+            <button id="positive">Add</button>
+        </div>
+        <h3 class="text-center">Delivery board</h3>
+        <table>
+            <tr>
+                <th>Vehicle</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>Telephone</th>
+                <th>Address</th>
+                <th>Return time</th>
+            </tr>
+        </table>
+        <div id="right">
+            <button id="negative">Clear</button>
+        </div>
+        <div id="clock"></div>
+        <div id="toast"></div>
+    </body>
+</html>
