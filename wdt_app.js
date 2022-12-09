@@ -48,7 +48,6 @@ class staffMember extends employee{
         this.duration = null;
         this.expectedReturnTime = null;
         this.staffInterval = null;
-        this.toastShown = false
     }  
     staffMemberIsLate(){ 
         let time = parseInt(this.expectedReturnTime.slice(0,2)) * 60 + parseInt(this.expectedReturnTime.slice(-2));
@@ -88,27 +87,23 @@ class deliveryDriver extends employee{
     }
 }
 
-APIdata = []
-staffArray = []
+let staffArray = []
 function staffUserGet(){
-    for(let i = 0; i < 5; i++){
-        $.ajax({
-            url: 'https://randomuser.me/api/',
-            success: function(data) {
-                information = data.results[0];
-                APIdata.push(information);
+    $.ajax({
+        url: 'https://randomuser.me/api/?results=5',
+        success: function(data){
+            let APIdata = data.results;
+            for(let i = 0; i < APIdata.length; i++){
                 staffArray.push(new staffMember(
                     APIdata[i].picture.thumbnail, 
                     APIdata[i].name.first,
                     APIdata[i].name.last,
                     APIdata[i].email,
                 ))
-                if(i == 4){
-                    enterTable();
-                }
             }
-        });
-    }
+            enterTable();
+        }
+    })
 }
 
 function enterTable(){
