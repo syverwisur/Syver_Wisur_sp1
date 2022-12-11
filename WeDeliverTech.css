@@ -126,3 +126,10 @@ ul,li{
 #droptext:hover{
     background-color: #0E8EA8;
 }
+
+input{
+    background-color: #83D1E1;
+    border-top: none;
+    border-left:none;
+    border-right:none;
+}

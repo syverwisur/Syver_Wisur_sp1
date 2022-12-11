@@ -159,6 +159,7 @@ function staffOut(){
         }
     }
 }
+
 function minsGreaterThan60(mins, hours){
     if(mins >= 60){
         hours++;
@@ -201,3 +202,38 @@ function staffIn(){
     }
 }
 
+function addDelivery (){
+    
+}
+
+function validateDelivery(vehicle, name, surname, telephone, address, returnTime){
+    let h = returnTime.split(':')[0];
+    let m = returnTime.split(':')[1];
+    if(!["Car","car", "motorcycle", "Motorcycle"].includes(vehicle)){
+        alert("Please enter a valid vehicle type. That is 'Car' or 'Motorcycle'." )
+    }
+    else if(!(isNaN(name))){
+        alert("Please enter a valid name.")
+    }
+    else if(!(isNaN(surname))){
+        alert("Please enter a valid surname.")
+    }
+    else if(isNaN(telephone)){
+        alert("Please enter a valid phone number.")
+    }
+    else if(!(isNaN(address))){
+        alert("Please enter a valid address")
+    }
+    else if(returnTime.indexOf(":")<2){
+        alert("Please enter a valid time format. That is 'hh:mm'.")
+    }
+    else if(isNaN(h) || parseInt(h)>23 || parseInt(h)<0 || h.length < 2){
+        alert("Please enter a valid time format. That is 'hh:mm'.")
+    }
+    else if(isNaN(m) || parseInt(m)>59 || parseInt(m)<0 || m.length < 2){
+        alert("Please enter a valid time format. That is 'hh:mm'.")
+    }
+    else{
+        return true 
+    }
+}
