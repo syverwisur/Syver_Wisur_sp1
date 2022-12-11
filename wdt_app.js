@@ -31,7 +31,7 @@ class employee{
         surname
     ){
         this.name = name;
-        this.surname = surname 
+        this.surname = surname;
     }
 }
 
@@ -58,11 +58,11 @@ class staffMember extends employee{
             let currentTime = date.getHours() * 60 + date.getMinutes();
             if(time < currentTime){
                 clearInterval(this.staffInterval);
-                $("#toast").append('<div id="staffToastFor' + this.name + '"class="toast" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true"></div>')
-                $("#staffToastFor" + this.name).append('<div id="staffToastHeaderFor' + this.name + '" class="toast-header"></div>')
-                $("#staffToastHeaderFor" + this.name).append('<strong class="me-auto">' + '<img src="' + this.picture + '"></img>'  +'</strong>')
-                $("#staffToastHeaderFor" + this.name).append('<small>'+ this.name + ' ' + this.surname + ' has been out of the office since ' + this.outTime +'</small>')
-                $("#staffToastHeaderFor" + this.name).append('<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>')
+                $("#toast").append('<div id="staffToastFor' + this.name + '"class="toast" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true"></div>');
+                $("#staffToastFor" + this.name).append('<div id="staffToastHeaderFor' + this.name + '" class="toast-header"></div>');
+                $("#staffToastHeaderFor" + this.name).append('<strong class="me-auto">' + '<img src="' + this.picture + '"></img>'  +'</strong>');
+                $("#staffToastHeaderFor" + this.name).append('<small>'+ this.name + ' ' + this.surname + ' has been out of the office since ' + this.outTime +'</small>');
+                $("#staffToastHeaderFor" + this.name).append('<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>');
                 $("#staffToastFor" + this.name).toast("show");
             }   
         }, 1000)
@@ -92,10 +92,10 @@ class deliveryDriver extends employee{
             let currentTime = date.getHours() * 60 + date.getMinutes();
             if(time < currentTime){
                 clearInterval(this.deliveryInterval);
-                $("#toast").append('<div id="deliveryToastFor' + this.name + '"class="toast" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true"></div>')
-                $("#deliveryToastFor" + this.name).append('<div id="deliveryToastHeaderFor' + this.name + '" class="toast-header"></div>')
-                $("#deliveryToastHeaderFor" + this.name).append('<small>'+ this.name + ' ' + this.surname + '\'s delivery was expected at ' + this.returnTime + ' from ' + this.deliveryAddress + ', their phone number is ' + this.telephone + '</small>')
-                $("#deliveryToastHeaderFor" + this.name).append('<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>')
+                $("#toast").append('<div id="deliveryToastFor' + this.name + '"class="toast" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true"></div>');
+                $("#deliveryToastFor" + this.name).append('<div id="deliveryToastHeaderFor' + this.name + '" class="toast-header"></div>');
+                $("#deliveryToastHeaderFor" + this.name).append('<small>'+ this.name + ' ' + this.surname + '\'s delivery was expected at ' + this.returnTime + ' from ' + this.deliveryAddress + ', their phone number is ' + this.telephone + '</small>');
+                $("#deliveryToastHeaderFor" + this.name).append('<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>');
                 $("#deliveryToastFor" + this.name).toast("show");
             }
         }, 1000)
@@ -123,25 +123,29 @@ function staffUserGet(){
 
 function enterTable(){
     for(let i = 0; i < staffArray.length; i++){
-            $("#picture" + i).append("<img src='" + staffArray[i].picture + "'></img>");
-            $("#name" + i).text(staffArray[i].name);
-            $("#surname" + i).text(staffArray[i].surname);
-            $("#emailaddress" + i).text(staffArray[i].email);
-            $("#status" + i).text(staffArray[i].status);
+        $("#staffTable").append("<tr id='tr" + i + "' class='rowHover'></tr>");
+        $("#tr" + i).append("<td><img src='" + staffArray[i].picture + "'></img>");
+        $("#tr" + i).append("<td>" + staffArray[i].name + "</td>");
+        $("#tr" + i).append("<td>" + staffArray[i].surname + "</td>");
+        $("#tr" + i).append("<td>" + staffArray[i].email + "</td>");
+        $("#tr" + i).append("<td id='status" + i + "'></td>");
+        $("#tr" + i).append("<td id='outTime" + i + "'></td>");
+        $("#tr" + i).append("<td id='duration" + i + "'></td>");
+        $("#tr" + i).append("<td id='expectedReturnTime" + i + "'></td>");
     }
 }
 
 $(document).ready(function(){
     $('#staffTable').on('mousedown', 'tr', function() {
-    $(this).toggleClass('selected').siblings().removeClass('selected');;
+    $(this).toggleClass('staffSelected').siblings().removeClass('staffSelected');
     })
 })
 
 function staffOut(){
-    let id = $(".selected").attr('id');
+    let id = $(".staffSelected").attr('id');
     if(id != undefined){
         let i = id.slice(-1);
-        let time = parseInt(prompt("Please enter the duration of their absence in minutes"));
+        let time = parseInt(prompt("Please enter the duration of their absence in minutes."));
         if(time > 0){
             staffArray[i].duration = Math.floor(time/60) + 'hr ' + time%60 + 'mins'
             $("#duration" + i).text(staffArray[i].duration);
@@ -153,7 +157,7 @@ function staffOut(){
             hoursAddZero = addZero(hours)
             minsAddZero = addZero(mins);
             staffArray[i].outTime = hoursAddZero + ':' + minsAddZero; 
-            $("#outtime" + i).text(staffArray[i].outTime);
+            $("#outTime" + i).text(staffArray[i].outTime);
             let hourSum = hours + Math.floor(time/60);
             let minSum = mins + time%60;
             timeArray = minsGreaterThan60(minSum, hourSum);
@@ -161,16 +165,16 @@ function staffOut(){
             timeArray[0] = addZero(timeArray[0]);
             timeArray[1] = addZero(timeArray[1]);
             staffArray[i].expectedReturnTime = timeArray[1] + ':' + timeArray[0];
-            $("#expectedreturntime" + i).text(staffArray[i].expectedReturnTime);
+            $("#expectedReturnTime" + i).text(staffArray[i].expectedReturnTime);
             staffArray[i].staffMemberIsLate();
-            $("#" + id).removeClass('selected');
+            $("#" + id).removeClass('staffSelected');
         }   
         else{
-            alert("Please enter a valid number")
+            alert("Please enter a valid number.");
         }
     }
     else{
-        alert("Please select a row")
+        alert("Please select a row.");
     }
 }
 
@@ -196,7 +200,7 @@ function hoursGreaterThan24(hour){
 }
 
 function staffIn(){
-    let id = $(".selected").attr('id');
+    let id = $(".staffSelected").attr('id');
     if(id != undefined){
         let i = id.slice(-1);
         staffArray[i].status = "In";
@@ -204,9 +208,9 @@ function staffIn(){
         staffArray[i].duration = null;
         $("#duration" + i).text(staffArray[i].duration);
         staffArray[i].outTime = null;
-        $("#outtime" + i).text(staffArray[i].outTime);
+        $("#outTime" + i).text(staffArray[i].outTime);
         staffArray[i].expectedReturnTime = null;
-        $("#expectedreturntime" + i).text(staffArray[i].expectedReturnTime);
+        $("#expectedReturnTime" + i).text(staffArray[i].expectedReturnTime);
         clearInterval(staffArray[i].staffInterval);
     }
     else{
@@ -259,46 +263,46 @@ function validateDelivery(vehicle, name, surname, telephone, address, returnTime
         let h = returnTime.split(':')[0];
         let m = returnTime.split(':')[1];
         if(!["Car","car", "motorcycle", "Motorcycle"].includes(vehicle)){
-            alert("Please enter a valid vehicle type. That is 'Car' or 'Motorcycle'." )
+            alert("Please enter a valid vehicle type. That is 'Car' or 'Motorcycle'." );
         }
         else if(!(isNaN(name))){
-            alert("Please enter a valid name.")
+            alert("Please enter a valid name.");
         }
         else if(!(isNaN(surname))){
-            alert("Please enter a valid surname.")
+            alert("Please enter a valid surname.");
         }
         else if(isNaN(telephone)){
-            alert("Please enter a valid phone number.")
+            alert("Please enter a valid phone number.");
         }
         else if(!(isNaN(address))){
-            alert("Please enter a valid address")
+            alert("Please enter a valid address.");
         }
         else if(returnTime.indexOf(":")<2){
-            alert("Please enter a valid time format. That is 'hh:mm'.")
+            alert("Please enter a valid time format. That is 'hh:mm'.");
         }
         else if(isNaN(h) || parseInt(h)>23 || parseInt(h)<0 || h.length < 2){
-            alert("Please enter a valid time format. That is 'hh:mm'.")
+            alert("Please enter a valid time format. That is 'hh:mm'.");
         }
         else if(isNaN(m) || parseInt(m)>59 || parseInt(m)<0 || m.length < 2){
-            alert("Please enter a valid time format. That is 'hh:mm'.")
+            alert("Please enter a valid time format. That is 'hh:mm'.");
         }
         else{
             return true 
         }
     }
     else{
-        alert("Do not leave any input elements empty")
+        alert("Do not leave any input elements empty");
     }
 }
 
 $(document).ready(function(){
     $('#deliveryTable').on('mousedown', 'tr', function() {
-    $(this).toggleClass('selected');
+    $(this).toggleClass('deliverySelected').siblings().removeClass('deliverySelected');
     })
 })
 
 function clearDelivery(){
-    let id = $(".selected").attr('id');
+    let id = $(".deliverySelected").attr('id');
     if(id != undefined){
         if(confirm("Are you sure you want to clear the selected row?") == true){
             let i = id.slice(-1);
@@ -306,10 +310,10 @@ function clearDelivery(){
             deliveryArray.splice(i, 1);
         }
         else{
-            alert("Clear cancelled!")
+            alert("Clear cancelled!");
         }
     }
     else{
-        alert("Please select a row")
+        alert("Please select a row");
     }
 }

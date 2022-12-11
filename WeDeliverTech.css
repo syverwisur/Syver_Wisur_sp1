@@ -139,6 +139,10 @@ input{
     background-color: #0E8EA8
 }
 
-.selected td{
+.staffSelected td{
+    background-color: #0E8EA8
+}
+
+.deliverySelected td{
     background-color: #0E8EA8
 }
