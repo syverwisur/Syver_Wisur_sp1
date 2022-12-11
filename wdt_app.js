@@ -131,47 +131,46 @@ function enterTable(){
     }
 }
 
+$(document).ready(function(){
+    $('#staffTable').on('mousedown', 'tr', function() {
+    $(this).toggleClass('selected').siblings().removeClass('selected');;
+    })
+})
+
 function staffOut(){
-    let staffName = prompt("Enter the name and surname of the staff member leaving the office.");
-    for(let i = 0; i < staffArray.length; i++){
-        if(staffName === staffArray[i].name + " " + staffArray[i].surname){
-            let time = parseInt(prompt("Please enter the duration of their absence in minutes"));
-            if(time > 0){
-                //Duration
-                staffArray[i].duration = Math.floor(time/60) + 'hr ' + time%60 + 'mins'
-                $("#duration" + i).text(staffArray[i].duration);
-                //Status 
-                staffArray[i].status = "Out";
-                $("#status" + i).text(staffArray[i].status);
-                //Out time
-                var date = new Date();
-                let hours = date.getHours();
-                let mins = date.getMinutes();
-                hoursAddZero = addZero(hours)
-                minsAddZero = addZero(mins);
-                staffArray[i].outTime = hoursAddZero + ':' + minsAddZero; 
-                $("#outtime" + i).text(staffArray[i].outTime);
-                //Expected return time 
-                let hourSum = hours + Math.floor(time/60);
-                let minSum = mins + time%60;
-                timeArray = minsGreaterThan60(minSum, hourSum);
-                timeArray[1] = hoursGreaterThan24(timeArray[1]);
-                timeArray[0] = addZero(timeArray[0]);
-                timeArray[1] = addZero(timeArray[1]);
-                staffArray[i].expectedReturnTime = timeArray[1] + ':' + timeArray[0];
-                $("#expectedreturntime" + i).text(staffArray[i].expectedReturnTime);
-                //StaffMemberIslate 
-                staffArray[i].staffMemberIsLate();
-                break;
-            }
-            else{
-                alert("Please enter a valid number")
-                break;
-            }
+    let id = $(".selected").attr('id');
+    if(id != undefined){
+        let i = id.slice(-1);
+        let time = parseInt(prompt("Please enter the duration of their absence in minutes"));
+        if(time > 0){
+            staffArray[i].duration = Math.floor(time/60) + 'hr ' + time%60 + 'mins'
+            $("#duration" + i).text(staffArray[i].duration);
+            staffArray[i].status = "Out";
+            $("#status" + i).text(staffArray[i].status);
+            var date = new Date();
+            let hours = date.getHours();
+            let mins = date.getMinutes();
+            hoursAddZero = addZero(hours)
+            minsAddZero = addZero(mins);
+            staffArray[i].outTime = hoursAddZero + ':' + minsAddZero; 
+            $("#outtime" + i).text(staffArray[i].outTime);
+            let hourSum = hours + Math.floor(time/60);
+            let minSum = mins + time%60;
+            timeArray = minsGreaterThan60(minSum, hourSum);
+            timeArray[1] = hoursGreaterThan24(timeArray[1]);
+            timeArray[0] = addZero(timeArray[0]);
+            timeArray[1] = addZero(timeArray[1]);
+            staffArray[i].expectedReturnTime = timeArray[1] + ':' + timeArray[0];
+            $("#expectedreturntime" + i).text(staffArray[i].expectedReturnTime);
+            staffArray[i].staffMemberIsLate();
+            $("#" + id).removeClass('selected');
+        }   
+        else{
+            alert("Please enter a valid number")
         }
-        else if(staffName !== staffArray[i].name + " " + staffArray[i].surname && i == 4){
-            alert("Please enter a valid name and surname. Note that this prompt is case sensitive.")
-        }
+    }
+    else{
+        alert("Please select a row")
     }
 }
 
@@ -197,23 +196,21 @@ function hoursGreaterThan24(hour){
 }
 
 function staffIn(){
-    let staffName = prompt("Enter the name and surname of the staff member entering the office.");
-    for(let i = 0; i < staffArray.length; i++){
-        if(staffName === staffArray[i].name + " " + staffArray[i].surname){
-            staffArray[i].status = "In";
-            $("#status" + i).text(staffArray[i].status);
-            staffArray[i].duration = null;
-            $("#duration" + i).text(staffArray[i].duration);
-            staffArray[i].outTime = null;
-            $("#outtime" + i).text(staffArray[i].outTime);
-            staffArray[i].expectedReturnTime = null;
-            $("#expectedreturntime" + i).text(staffArray[i].expectedReturnTime);
-            clearInterval(staffArray[i].staffInterval);
-            break;
-        }
-        else if(staffName !== staffArray[i].name + " " + staffArray[i].surname && i == 4){
-            alert("Please enter a valid name and surname. Note that this prompt is case sensitive.")
-        }
+    let id = $(".selected").attr('id');
+    if(id != undefined){
+        let i = id.slice(-1);
+        staffArray[i].status = "In";
+        $("#status" + i).text(staffArray[i].status);
+        staffArray[i].duration = null;
+        $("#duration" + i).text(staffArray[i].duration);
+        staffArray[i].outTime = null;
+        $("#outtime" + i).text(staffArray[i].outTime);
+        staffArray[i].expectedReturnTime = null;
+        $("#expectedreturntime" + i).text(staffArray[i].expectedReturnTime);
+        clearInterval(staffArray[i].staffInterval);
+    }
+    else{
+        alert("Please select a row");
     }
 }
 
@@ -301,10 +298,10 @@ $(document).ready(function(){
 })
 
 function clearDelivery(){
-    var id = $(".selected").attr('id');
+    let id = $(".selected").attr('id');
     if(id != undefined){
         if(confirm("Are you sure you want to clear the selected row?") == true){
-            i = id.slice(-1);
+            let i = id.slice(-1);
             $('#' + id).remove();
             deliveryArray.splice(i, 1);
         }
