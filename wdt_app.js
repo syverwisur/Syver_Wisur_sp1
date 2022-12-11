@@ -1,15 +1,17 @@
 function clock(){
-    var date = new Date();
-    let t = date.getDate();
-    let mo = date.getMonth();
-    let y = date.getFullYear();
-    let h = date.getHours();
-    let m = date.getMinutes();
-    let s = date.getSeconds();
-    m = addZero(m);
-    s = addZero(s);
-    $("#clock").text(t + '/' + mo + '/' + y + ' ' + h + ':' + m + ':' + s);
-    setTimeout(clock, 1000);
+    $(document).ready(function(){
+        var date = new Date();
+        let t = date.getDate();
+        let mo = date.getMonth();
+        let y = date.getFullYear();
+        let h = date.getHours();
+        let m = date.getMinutes();
+        let s = date.getSeconds();
+        m = addZero(m);
+        s = addZero(s);
+        $("#clock").text(t + '/' + mo + '/' + y + ' ' + h + ':' + m + ':' + s);
+        setTimeout(clock, 1000);
+    })
 }
 
 function addZero(time){
@@ -81,9 +83,22 @@ class deliveryDriver extends employee{
         this.telephone = telephone;
         this.deliveryAddress = deliveryAddress;
         this.returnTime = returnTime;
+        this.deliveryInterval = null;
     }
     deliveryDriverIsLate(){
-
+        let time = parseInt(this.returnTime.slice(0,2)) * 60 + parseInt(this.returnTime.slice(-2));
+        this.deliveryInterval = setInterval(() =>{
+            var date = new Date();
+            let currentTime = date.getHours() * 60 + date.getMinutes();
+            if(time < currentTime){
+                clearInterval(this.deliveryInterval);
+                $("#toast").append('<div id="deliveryToastFor' + this.name + '"class="toast" data-bs-autohide="false" role="alert" aria-live="assertive" aria-atomic="true"></div>')
+                $("#deliveryToastFor" + this.name).append('<div id="deliveryToastHeaderFor' + this.name + '" class="toast-header"></div>')
+                $("#deliveryToastHeaderFor" + this.name).append('<small>'+ this.name + ' ' + this.surname + '\'s delivery was expected at ' + this.returnTime + ' from ' + this.deliveryAddress + ', their phone number is ' + this.telephone + '</small>')
+                $("#deliveryToastHeaderFor" + this.name).append('<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>')
+                $("#deliveryToastFor" + this.name).toast("show");
+            }
+        }, 1000)
     }
 }
 
@@ -108,11 +123,11 @@ function staffUserGet(){
 
 function enterTable(){
     for(let i = 0; i < staffArray.length; i++){
-        $("#picture" + i).append("<img src='" + staffArray[i].picture + "'></img>");
-        $("#name" + i).text(staffArray[i].name);
-        $("#surname" + i).text(staffArray[i].surname);
-        $("#emailaddress" + i).text(staffArray[i].email);
-        $("#status" + i).text(staffArray[i].status);
+            $("#picture" + i).append("<img src='" + staffArray[i].picture + "'></img>");
+            $("#name" + i).text(staffArray[i].name);
+            $("#surname" + i).text(staffArray[i].surname);
+            $("#emailaddress" + i).text(staffArray[i].email);
+            $("#status" + i).text(staffArray[i].status);
     }
 }
 
@@ -202,38 +217,102 @@ function staffIn(){
     }
 }
 
-function addDelivery (){
-    
+deliveryArray = []
+function addDelivery(){
+    let vehicle = $("#vehicle").val();
+    let name = $("#name").val();
+    let surname = $("#surname").val();
+    let telephone = $("#telephone").val();
+    let address = $("#address").val();
+    let returnTime = $("#returnTime").val();
+    if(validateDelivery(vehicle, name, surname, telephone, address, returnTime) == true){
+        deliveryArray.push(new deliveryDriver(vehicleIcon(vehicle), name, surname, telephone, address, returnTime));
+        for(let i = 0; i < deliveryArray.length; i++){
+            if($("#row" + i ).length == 0){
+                $("#deliveryTable").append("<tr id='row" + i + "' class='rowHover'></tr>")
+                $("#row" + i).append("<td>" + deliveryArray[i].vehicle + "</td>")
+                $("#row" + i).append("<td>" + deliveryArray[i].name + "</td>")
+                $("#row" + i).append("<td>" + deliveryArray[i].surname + "</td>")
+                $("#row" + i).append("<td>" + deliveryArray[i].telephone + "</td>")
+                $("#row" + i).append("<td>" + deliveryArray[i].deliveryAddress + "</td>")
+                $("#row" + i).append("<td>" + deliveryArray[i].returnTime + "</td>")
+                deliveryArray[i].deliveryDriverIsLate();
+            }
+        }
+        $('#vehicle').val('');
+        $('#name').val('');
+        $('#surname').val('');
+        $('#telephone').val('');
+        $('#address').val('');
+        $('#returnTime').val('');
+    }
+}
+
+function vehicleIcon(vehicle){
+    if(vehicle == 'car' || vehicle == 'Car'){
+        return "<i class='bi bi-car-front-fill'></i>";
+    }
+    else{
+        return "<i class='bi bi-bicycle'></i>"
+    }
 }
 
 function validateDelivery(vehicle, name, surname, telephone, address, returnTime){
-    let h = returnTime.split(':')[0];
-    let m = returnTime.split(':')[1];
-    if(!["Car","car", "motorcycle", "Motorcycle"].includes(vehicle)){
-        alert("Please enter a valid vehicle type. That is 'Car' or 'Motorcycle'." )
-    }
-    else if(!(isNaN(name))){
-        alert("Please enter a valid name.")
-    }
-    else if(!(isNaN(surname))){
-        alert("Please enter a valid surname.")
-    }
-    else if(isNaN(telephone)){
-        alert("Please enter a valid phone number.")
-    }
-    else if(!(isNaN(address))){
-        alert("Please enter a valid address")
-    }
-    else if(returnTime.indexOf(":")<2){
-        alert("Please enter a valid time format. That is 'hh:mm'.")
-    }
-    else if(isNaN(h) || parseInt(h)>23 || parseInt(h)<0 || h.length < 2){
-        alert("Please enter a valid time format. That is 'hh:mm'.")
-    }
-    else if(isNaN(m) || parseInt(m)>59 || parseInt(m)<0 || m.length < 2){
-        alert("Please enter a valid time format. That is 'hh:mm'.")
+    if([vehicle, name, surname, telephone, address, returnTime].every(element => String(element).length > 0)){
+        let h = returnTime.split(':')[0];
+        let m = returnTime.split(':')[1];
+        if(!["Car","car", "motorcycle", "Motorcycle"].includes(vehicle)){
+            alert("Please enter a valid vehicle type. That is 'Car' or 'Motorcycle'." )
+        }
+        else if(!(isNaN(name))){
+            alert("Please enter a valid name.")
+        }
+        else if(!(isNaN(surname))){
+            alert("Please enter a valid surname.")
+        }
+        else if(isNaN(telephone)){
+            alert("Please enter a valid phone number.")
+        }
+        else if(!(isNaN(address))){
+            alert("Please enter a valid address")
+        }
+        else if(returnTime.indexOf(":")<2){
+            alert("Please enter a valid time format. That is 'hh:mm'.")
+        }
+        else if(isNaN(h) || parseInt(h)>23 || parseInt(h)<0 || h.length < 2){
+            alert("Please enter a valid time format. That is 'hh:mm'.")
+        }
+        else if(isNaN(m) || parseInt(m)>59 || parseInt(m)<0 || m.length < 2){
+            alert("Please enter a valid time format. That is 'hh:mm'.")
+        }
+        else{
+            return true 
+        }
     }
     else{
-        return true 
+        alert("Do not leave any input elements empty")
+    }
+}
+
+$(document).ready(function(){
+    $('#deliveryTable').on('mousedown', 'tr', function() {
+    $(this).toggleClass('selected');
+    })
+})
+
+function clearDelivery(){
+    var id = $(".selected").attr('id');
+    if(id != undefined){
+        if(confirm("Are you sure you want to clear the selected row?") == true){
+            i = id.slice(-1);
+            $('#' + id).remove();
+            deliveryArray.splice(i, 1);
+        }
+        else{
+            alert("Clear cancelled!")
+        }
+    }
+    else{
+        alert("Please select a row")
     }
 }

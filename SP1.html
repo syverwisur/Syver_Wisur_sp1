@@ -8,9 +8,10 @@
         <!-- Bootstrap CSS -->
         <link href="./css/bootstrap.min.css" rel="stylesheet">
         <link href="WeDeliverTech.css" rel="stylesheet">
-        <script src="wdt_app.js"></script>
         <script src="./js/bootstrap.bundle.min.js"></script>
         <script src="jquery-3.6.0.js"></script>  
+        <script src="wdt_app.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     </head>
     <body onload="clock();staffUserGet()"> 
         <ul class="nav" id="navbar">
@@ -48,7 +49,7 @@
                 <th>Duration</th>
                 <th>Expected return time</th>
             </tr>
-            <tr id="tr0">
+            <tr id="tr0" class="rowHover">
                 <td id="picture0"> </td>
                 <td id="name0"> </td>
                 <td id="surname0"> </td>
@@ -58,7 +59,7 @@
                 <td id="duration0"> </td>
                 <td id="expectedreturntime0"> </td>
             </tr>
-            <tr id="tr1">
+            <tr id="tr1" class="rowHover">
                 <td id="picture1"> </td>
                 <td id="name1"> </td>
                 <td id="surname1"> </td>
@@ -68,7 +69,7 @@
                 <td id="duration1"> </td>
                 <td id="expectedreturntime1"> </td>
             </tr>
-            <tr id="tr2"> 
+            <tr id="tr2" class="rowHover"> 
                 <td id="picture2"> </td>
                 <td id="name2"> </td>
                 <td id="surname2"> </td>
@@ -78,7 +79,7 @@
                 <td id="duration2"> </td>
                 <td id="expectedreturntime2"> </td>
             </tr>
-            <tr id="tr3">
+            <tr id="tr3" class="rowHover">
                 <td id="picture3"> </td>
                 <td id="name3"> </td>
                 <td id="surname3"> </td>
@@ -88,7 +89,7 @@
                 <td id="duration3"> </td>
                 <td id="expectedreturntime3"> </td>
             </tr>
-            <tr id="tr4">
+            <tr id="tr4" class="rowHover">
                 <td id="picture4"> </td>
                 <td id="name4"> </td>
                 <td id="surname4"> </td>
@@ -100,8 +101,8 @@
             </tr>
         </table>
         <div id="space">
-            <button id="negative" onclick="staffOut()">Out</button>
-            <button id="positive" onclick="staffIn()">In</button>
+            <button class="negative" onclick="staffOut()">Out</button>
+            <button class="positive" onclick="staffIn()">In</button>
         </div>
         <h3 class="text-center">Schedule Delivery</h3>
         <table>
@@ -114,19 +115,19 @@
                 <th>Return time:</th>
             </tr>
             <tr>
-                <td id="vehicle"><input></td>
-                <td id="name"><input></td>
-                <td id="surname"><input></td>
-                <td id="telephone"><input></td>
-                <td id="address"><input></td>
-                <td id="returnTime"><input></td>
+                <td><input id="vehicle"></td>
+                <td><input id="name"></td>
+                <td><input id="surname"></td>
+                <td><input id="telephone"></td>
+                <td><input id="address"></td>
+                <td><input id="returnTime"></td>
             </tr>
         </table>
         <div id="right">
-            <button id="positive">Add</button>
+            <button class="positive" onclick="addDelivery()">Add</button>
         </div>
         <h3 class="text-center">Delivery board</h3>
-        <table>
+        <table id="deliveryTable">
             <tr>
                 <th>Vehicle</th>
                 <th>Name</th>
@@ -137,7 +138,7 @@
             </tr>
         </table>
         <div id="right">
-            <button id="negative">Clear</button>
+            <button class="negative" onclick="clearDelivery()">Clear</button>
         </div>
         <div id="clock"></div>
         <div id="toast"></div>

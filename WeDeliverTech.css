@@ -61,23 +61,23 @@ button{
     width: 100px;
 }
 
-#positive{
+.positive{
     font-family: "consolas";
     background-color: #198754;
     color: #fff;
     border-radius: 5px;
 }
 
-#positive:hover {background-color: #66FF00}
+.positive:hover {background-color: #66FF00}
 
-#negative{
+.negative{
     font-family: "consolas";
     background-color: #dc3545;
     color: #fff;
     border-radius: 5px;
 }
 
-#negative:hover {background-color: red;}
+.negative:hover {background-color: red;}
 
 #right{
     display: flex;
@@ -132,4 +132,13 @@ input{
     border-top: none;
     border-left:none;
     border-right:none;
+    text-align: center;
+}
+
+.rowHover:hover td{
+    background-color: #0E8EA8
+}
+
+.selected td{
+    background-color: #0E8EA8
 }
