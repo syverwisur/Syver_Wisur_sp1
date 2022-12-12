@@ -210,6 +210,7 @@ function staffIn(){
         staffArray[i].expectedReturnTime = null;
         $("#expectedReturnTime" + i).text(staffArray[i].expectedReturnTime);
         clearInterval(staffArray[i].staffInterval);
+        $("#" + id).removeClass('staffSelected');
     }
     else{
         alert("Please select a row");
