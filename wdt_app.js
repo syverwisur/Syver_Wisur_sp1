@@ -108,14 +108,12 @@ function staffUserGet(){
         url: 'https://randomuser.me/api/?results=5',
         success: function(data){
             let APIdata = data.results;
-            for(let i = 0; i < APIdata.length; i++){
-                staffArray.push(new staffMember(
-                    APIdata[i].picture.thumbnail, 
-                    APIdata[i].name.first,
-                    APIdata[i].name.last,
-                    APIdata[i].email,
-                ))
-            }
+            staffArray = APIdata.map(user => new staffMember(
+                user.picture.thumbnail, 
+                user.name.first,
+                user.name.last,
+                user.email,
+            ));
             enterTable();
         }
     })
@@ -128,7 +126,7 @@ function enterTable(){
         $("#tr" + i).append("<td>" + staffArray[i].name + "</td>");
         $("#tr" + i).append("<td>" + staffArray[i].surname + "</td>");
         $("#tr" + i).append("<td>" + staffArray[i].email + "</td>");
-        $("#tr" + i).append("<td id='status" + i + "'></td>");
+        $("#tr" + i).append("<td id='status" + i + "'>" + staffArray[i].status + "</td>");
         $("#tr" + i).append("<td id='outTime" + i + "'></td>");
         $("#tr" + i).append("<td id='duration" + i + "'></td>");
         $("#tr" + i).append("<td id='expectedReturnTime" + i + "'></td>");
@@ -136,7 +134,7 @@ function enterTable(){
 }
 
 $(document).ready(function(){
-    $('#staffTable').on('mousedown', 'tr', function() {
+    $('#staffTable').on('click', 'tr', function() {
     $(this).toggleClass('staffSelected').siblings().removeClass('staffSelected');
     })
 })
@@ -271,7 +269,7 @@ function validateDelivery(vehicle, name, surname, telephone, address, returnTime
         else if(!(isNaN(surname))){
             alert("Please enter a valid surname.");
         }
-        else if(isNaN(telephone)){
+        else if(isNaN(telephone) || telephone < 100){
             alert("Please enter a valid phone number.");
         }
         else if(!(isNaN(address))){
@@ -296,7 +294,7 @@ function validateDelivery(vehicle, name, surname, telephone, address, returnTime
 }
 
 $(document).ready(function(){
-    $('#deliveryTable').on('mousedown', 'tr', function() {
+    $('#deliveryTable').on('click', 'tr', function() {
     $(this).toggleClass('deliverySelected').siblings().removeClass('deliverySelected');
     })
 })
